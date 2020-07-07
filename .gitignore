@@ -1,5 +1,6 @@
 *.pdf
 *~
+.ccls-cache/
 
 # Dump file
 *.stackdump
