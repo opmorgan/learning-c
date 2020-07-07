@@ -1,0 +1,5 @@
+*.pdf
+*~
+
+# Dump file
+*.stackdump
