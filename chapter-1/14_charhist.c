@@ -33,35 +33,55 @@ int main(void) {
   /* display histogram data */
 
   /* find the greatest count in the array */
+  /* int greatest_count = find_max(freqs); */
+  /* int find_max(int array) { */
+  /*   int greatest_count = 0; */
+  /*   for (int i = 0; i <= n_chars-1; ++i) { */
+  /*     if (freqs[i] > greatest_count) { */
+  /*       greatest_count = freqs[i]; */
+  /*     } */
+  /*   } */
+  /* } */
   int greatest_count = 0;
   for (int i = 0; i <= n_chars-1; ++i) {
     if (freqs[i] > greatest_count) {
       greatest_count = freqs[i];
     }
   }
+
   /* find the length of its decimal representation */
   int n = greatest_count; int greatest_len = 0;
   while (n != 0) {
     n = n/10;
     ++greatest_len;
   }
-  printf("Greatest count: %d. Length: %d\n.", greatest_count, greatest_len);
+  printf("Greatest count: %d. Length: %d.\n", greatest_count, greatest_len);
 
 
   /* scale histogram, if needed */
+  /* freqs_scaled = scale_histdata(freqs, int MAXPIPS); */
   int max_pips = MAX_PIPS;
-  int scale_factor = max_pips / greatest_count;
-  printf("Scale factor: %d ( X %d = %d", scale_factor, MAX_PIPS, greatest_count);
+  int scale_factor = greatest_count / max_pips;
+  printf("Scale factor: %d ( X %d = %d\n", scale_factor, max_pips, greatest_count);
   int freqs_scaled[MAX_CHARS] = {0};
-  if (greatest_count < max_pips) {
-    for (int i = 0; i <= n_chars-1; ++i) {
+  for (int i = 0; i <= n_chars-1; ++i) {
+    printf("in for loop. i = %d; letter = %c; greatest_count = %d; max_pips = %d; (greatest_count > max_pips) = %d; freqs[i] = %d; ", i, chars[i], greatest_count, max_pips, (greatest_count > max_pips), freqs[i]); 
+    if (greatest_count > max_pips) {
       freqs_scaled[i] = freqs[i] / scale_factor;
+    } else {
+      freqs_scaled[i] = freqs[i];
     }
+    printf("freqs_scaled[i] = %d.\n", freqs_scaled[i]);
   }
-
 
   for (int i = 0; i <= n_chars-1; ++i) {
     printf("%c: %*d |", chars[i], 5, freqs[i]);
+    for (int j = 0; j <= freqs_scaled[i] - 1; ++j) {
+      if (j < freqs_scaled[i] - 1) {
+        printf("%s", "-");
+      } else 
+        printf("%c", chars[i]);
+    }
     printf("\n");
   }
 }
