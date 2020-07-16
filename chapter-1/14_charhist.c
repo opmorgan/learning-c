@@ -9,7 +9,7 @@
 /* the maximum number of pips to display in the histogram */
 #define MAX_PIPS 50
 
-int find_max(int * array);
+int find_max(int array[], int array_len);
 int find_ndigits(int num);
 
 int main(void) {
@@ -29,17 +29,15 @@ int main(void) {
   int c;
   while((c = getchar()) != EOF) {
     for (int i = 0; i <= n_chars; ++i) {
-      /* count occurences (-20 for uppercase) */
-      if ( (c == chars[i]) | (c == chars[i] - 20) )
+      /* count occurences (-32 for uppercase) */
+      if ( (c == chars[i]) | (c == chars[i] - 32) )
         ++counts[i];
     }
   }
 
   /* prepare data for histogram */
-
   /* find the greatest count in the array */
-  int greatest_count = find_max(counts);
-
+  int greatest_count = find_max(counts, ARRAY_SIZE(counts));
   /* find the length of its decimal representation */
   int greatest_len = find_ndigits(greatest_count);
 
@@ -57,7 +55,7 @@ int main(void) {
 
   /* display histogram  */
   for (int i = 0; i <= n_chars-1; ++i) {
-    printf("%c: %*d |", chars[i], 5, counts[i]);
+    printf("%c: %*d|", chars[i], greatest_len, counts[i]);
     for (int j = 0; j <= counts_scaled[i] - 1; ++j) {
       if (j < counts_scaled[i] - 1) {
         printf("%s", "-");
@@ -68,8 +66,7 @@ int main(void) {
   }
 }
 
-int find_max(int * array) {
-  int array_len = ARRAY_SIZE(array);
+int find_max(int array[], int array_len) {
   int max = 0;
   for (int i = 0; i <= array_len-1; ++i) {
     if (array[i] > max) {
@@ -80,11 +77,11 @@ int find_max(int * array) {
 }
 
 int find_ndigits(int num) {
-  int ndigits= 0; int n = num;
-  while (n != 0) {
-    n = n/10;
+  int ndigits= 0;
+  while (num != 0) {
+    num = num/10;
     ++ndigits;
   }
-  return n;
+  return ndigits;
 }
 
